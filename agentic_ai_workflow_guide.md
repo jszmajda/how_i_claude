@@ -97,6 +97,17 @@ After work is done, check what actually happened:
 
 **The skill to develop:** Ask yourself "what am I assuming here?" Then validate. Instructions you gave earlier may have fallen out of context. Your intent may have been interpreted differently than you expected. The drift you don't catch is the drift that costs you later.
 
+**Watch out for partial file reads.** When you ask for a change to a file, the AI often won't read the entire file—it reads enough to find what it's looking for, then stops. This means it can miss related code elsewhere in the same file.
+
+Example: You ask to change some tag styling on a screen. The AI finds and fixes one tags component. But there's another tags component visually right below it on screen—in a completely different part of the file—that the AI never read and didn't change. Things look close together in your app, but they might be far apart in the code.
+
+**The pattern:**
+- After changes, ask: "Are there other places in this file that need the same change?"
+- Or preemptively: "Read the whole file first and find all instances of X before making changes"
+- For consistency changes, ask: "Search the codebase for similar patterns"
+
+The AI's view of the code doesn't match your view of the running app. What's visually adjacent might be hundreds of lines apart.
+
 **Why this matters now:** Recent research on AI agents ([What Do We Tell the Humans?](https://theaidigest.org/village/blog/what-do-we-tell-the-humans)) found that agents don't intentionally deceive, but they do exhibit reasoning errors, memory failures, and self-serving rationalizations that compound over time. The agent might genuinely believe it did what you asked. Verification isn't about distrust—it's about catching the errors that naturally occur.
 
 ### Close the feedback loop
@@ -148,6 +159,24 @@ The thing to avoid is **frustrated circling**:
 
 3. **Are you debugging symptoms instead of root causes?** Stop trying fixes and investigate: "let's understand why this is happening before we try to fix it."
 
+### The failing tests loop
+
+A particularly expensive form of frustrated circling: you ask the AI to fix failing tests, rerun the suite, tests still fail, repeat. With slow test suites, this burns time and tokens.
+
+**Two approaches that help:**
+
+**For unit tests—make them fast with mocks.** If the test can use mocks instead of real dependencies, restructure it that way. Fast tests let the AI iterate quickly on the actual problem. A test that runs in milliseconds can be run dozens of times while debugging; a test that takes 30 seconds can't.
+
+**For integration tests—stop and trace.** Integration tests are slow by nature and you can't mock them without defeating the purpose. When you're in a fix-run-fail loop with integration tests:
+
+1. Stop trying fixes
+2. Put the AI in plan mode
+3. Ask it to "revalidate all your assumptions and trace all the data flows involved"
+
+This forces the AI to think through the problem systematically rather than guessing at fixes. It often surfaces the actual issue—an assumption that's wrong, a data flow that doesn't work the way the AI thought.
+
+**The catch:** You have to remember to break the loop. The AI won't naturally stop and say "let me trace through this systematically." You need to recognize the pattern and redirect.
+
 ---
 
 ## Step 4: For Complex Work, Use Structure
@@ -168,6 +197,57 @@ In plan mode:
 - You review and approve the plan before any implementation begins
 
 This upfront investment in alignment pays off significantly. Getting on the same page *before* writing code prevents the kind of drift where you discover misalignment after work is done.
+
+### Set up your CLAUDE.md (or equivalent)
+
+Most agentic AI tools support project-level instruction files (CLAUDE.md for Claude Code, .cursorrules for Cursor, etc.). These tell the AI how to work with your specific codebase.
+
+**Best practices:**
+
+1. **Let the AI initialize it** - Run `claude /init` or equivalent. The AI knows what structure works and will scan your codebase to populate it with relevant context.
+
+2. **Use it for direction, not just documentation** - Don't just describe the current state. Document where you want to drive change:
+   - "We're migrating from X to Y—use Y for all new code"
+   - "Always use TDD—write tests before implementation"
+   - "Prefer composition over inheritance"
+   - "Use the repository pattern for data access, not direct DB calls"
+
+3. **Be specific about patterns** - Vague guidance gets vague compliance. "Write clean code" means nothing. "All API endpoints must validate input with zod schemas" is actionable.
+
+4. **Update it as you learn** - When the AI does something you don't like, add guidance to prevent it next time.
+
+**Honest caveat:** The AI will *tend* to respect these instructions, but it's not perfect. You'll still need to remind it. Even "always use TDD" in a CLAUDE.md doesn't guarantee TDD—you'll catch the AI writing tests after code and need to redirect. The file helps, but validation still matters.
+
+Think of CLAUDE.md as onboarding documentation for a new team member who has a good memory but occasionally needs reminders.
+
+### Consider using Skills for repeatable workflows
+
+Claude Code supports Skills—custom instructions that define specific workflows. Skills are designed to be **model-invoked**: Claude automatically decides when to use them based on matching your request to the skill's description.
+
+**How skills work:**
+1. At startup, Claude loads only skill names and descriptions (not full content)
+2. When your request matches a skill's description, Claude asks to use it
+3. You confirm, and Claude follows the skill's instructions
+
+**The description is critical.** Claude uses it to decide when a skill applies. A vague description like "helps with development" won't trigger reliably. Specific trigger words work better:
+```yaml
+description: Guide test-driven development workflow. Use when writing new features,
+             when the user mentions TDD, or when tests should be written first.
+```
+
+**When skills help:**
+- Workflows with specific steps (like design-driven development with HLD → LLD → specs → implementation)
+- Practices you want enforced consistently (TDD, code review checklists)
+- Complex multi-step processes where order matters
+
+**Honest observation:** In practice, Claude doesn't always invoke skills even when they seem relevant. A `/design-driven-dev` skill might exist but Claude won't use it unless the request clearly matches the description—or you invoke it manually with `/skill-name`. If a skill isn't triggering when you expect, check that:
+- The description includes words users naturally say
+- The trigger conditions are specific, not vague
+- You might need to mention keywords from the description
+
+Skills require maintenance as workflows evolve. Start with one or two for your most repeated complex workflows.
+
+---
 
 ### Write context to a file first
 
