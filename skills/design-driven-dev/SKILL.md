@@ -1,6 +1,6 @@
 ---
 name: design-driven-dev
-description: Guide for design-driven development workflow. Use this for nearly ALL work - find or create a design before implementation. Only exceptions: debugging sessions, quick bug fixes (<30 min), or prototype spikes. For everything else: HLD → LLD → EARS specs → Implementation plan → Code with spec annotations.
+description: Guide for design-driven development. Consult for ALL code changes. New features use full workflow (HLD → LLD → EARS → Plan). Bug fixes skip doc creation but still verify intent coherence—check that existing specs, tests, and code align before changing anything.
 ---
 
 # Design-Driven Development
@@ -22,14 +22,21 @@ This is the most important part of the workflow. Don't rush through design to ge
 
 ## When to Use This Workflow
 
-**Use for nearly all work.** Before implementing, either find an existing design or create one.
+**Consult this skill for ALL code changes.**
 
-**Skip only for:**
-- Debugging sessions (investigating issues)
-- Quick bug fixes (<30 minutes)
-- Prototype spikes (exploratory code)
+**Full workflow (create new docs) for:**
+- New features
+- Major refactors
+- Significant behavior changes
 
-**If unsure, use the workflow.** Over-designing is safer than under-designing.
+**Coherence check only (skip doc creation) for:**
+- Bug fixes
+- Quick changes (<30 minutes)
+- Debugging sessions
+
+Even when skipping doc creation, verify intent coherence: do existing specs, tests, and code align? If not, fix the docs before changing the code.
+
+**If unsure, use the full workflow.** Over-designing is safer than under-designing.
 
 ## Phase 1: High-Level Design
 
@@ -86,6 +93,57 @@ Key elements:
 - **Testing requirements** with spec annotations
 
 **Stop and get user approval before proceeding.**
+
+## Maintaining Intent Coherence
+
+### The Arrow of Intent
+
+There's a chain of documents that translates intent from vision to working code:
+
+```
+HLD → LLDs → EARS → Tests → Code
+```
+
+Each level translates the previous into more specific terms:
+- **HLD** says *what* and *why*
+- **LLDs** say *how* at a component level
+- **EARS** says *exactly what must be true* in testable terms
+- **Tests** verify those truths
+- **Code** makes them real
+
+These aren't independent documents—they're a single expression of intent at different levels of specificity.
+
+### The Problem: Intent Drift
+
+Intent drifts over time. User clarifies something and the LLD gets updated but not the EARS. A test gets fixed but the spec still says the old thing. The HLD evolves but nobody touches downstream docs.
+
+Eventually the levels disagree. The code works, but doesn't match the specs. The specs pass review, but don't match the design. The chain breaks.
+
+### The Principle: Coherence Over History
+
+The arrow of intent must stay coherent. When one level changes, downstream levels must be reviewed and updated to match.
+
+**Mutation, not accumulation.** Update docs in place. Delete what's wrong. The documentation should always reflect *current* intent—not the history of how intent evolved.
+
+### The Practice: Cascade Changes Downward
+
+When requirements or understanding change:
+
+1. **Identify the entry point** - Where in the chain does this change originate?
+2. **Update at that level** - Mutate the doc directly
+3. **Cascade downward** - Review and update each subsequent level:
+   - HLD change → review LLDs → review EARS → review tests → review code
+   - LLD change → review EARS → review tests → review code
+   - EARS change → review tests → review code
+4. **Delete what's obsolete** - Remove specs that no longer apply; remove tests for removed specs
+
+### Before Implementation
+
+Before implementing (or resuming implementation), verify coherence:
+
+- Do the EARS specs trace to the current LLD?
+- Do the tests trace to current EARS?
+- If drift is detected, fix the docs first—then implement.
 
 ## Code Annotation Pattern
 
