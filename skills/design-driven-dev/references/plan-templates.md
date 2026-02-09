@@ -43,8 +43,8 @@ Measurable outcomes that define success.
 
 #### Testing Requirements
 
-- **AUTH-UI-001**: Test description
-- **AUTH-UI-002**: Test description
+- ✅ **AUTH-UI-001**: Test description
+- ✅ **AUTH-UI-002**: Test description
 
 #### Definition of Done
 
@@ -99,17 +99,17 @@ Checkmarks with spec references:
 #### Testing Requirements
 
 **Unit tests** (verify specs with @spec annotations):
-- **AUTH-UI-004 to AUTH-UI-008**: Form validation
-- **AUTH-API-001**: Token generation
-- **AUTH-API-003**: Token refresh
+- ✅ **AUTH-UI-004 to AUTH-UI-008**: Form validation
+- ✅ **AUTH-API-001**: Token generation
+- ✅ **AUTH-API-003**: Token refresh
 
 **Integration tests**:
-- **AUTH-UI-015**: Full login flow
-- **AUTH-API-010**: API authentication middleware
+- ✅ **AUTH-UI-015**: Full login flow
+- ✅ **AUTH-API-010**: API authentication middleware
 
 **E2E tests**:
-- **AUTH-UI-020**: Login from landing page
-- **AUTH-UI-021**: Session persistence across reload
+- ✅ **AUTH-UI-020**: Login from landing page
+- ✅ **AUTH-UI-021**: Session persistence across reload
 ```
 
 ### 4. Definition of Done
@@ -185,3 +185,4 @@ Include for each phase:
 - **Mitigation**: Mutex lock on refresh, queue pending requests
 - **Fallback**: Force re-login on conflict
 ```
+

@@ -62,6 +62,7 @@ Key principles:
 - **Structured format** for API contracts and interfaces
 - Include data models, error handling, edge cases
 - Reference the HLD for context
+- **LLDs are pure design documents** — they describe *how* things work but do not track implementation status
 
 **Stop and get user approval before proceeding.**
 
@@ -75,7 +76,8 @@ Key principles:
 - **Semantic spec IDs**: `{FEATURE}-{TYPE}-{NNN}` (e.g., `AUTH-UI-001`, `CART-API-003`)
 - Create in `/docs/specs/` (e.g., `user-authentication-specs.md`)
 - Each requirement is testable and traceable
-- Include acceptance criteria
+- Spec files carry status markers: `[x]` implemented, `[ ]` active gap, `[D]` deferred
+- **Delete specs that are no longer wanted** — git preserves history
 
 **Stop and get user approval before proceeding.**
 
@@ -135,7 +137,7 @@ When requirements or understanding change:
    - HLD change → review LLDs → review EARS → review tests → review code
    - LLD change → review EARS → review tests → review code
    - EARS change → review tests → review code
-4. **Delete what's obsolete** - Remove specs that no longer apply; remove tests for removed specs
+4. **Delete what's obsolete** - Delete specs that no longer apply (don't mark them, just remove); remove tests for removed specs
 
 ### Before Implementation
 

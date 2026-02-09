@@ -1,6 +1,11 @@
 # LLD Templates Reference
 
-Low-Level Designs (LLDs) document component-specific technical decisions before implementation.
+Low-Level Designs (LLDs) document component-specific technical decisions before implementation. LLDs are **pure design documents** — they describe *how* things work, the constraints, trade-offs, and decisions. They do not track implementation status.
+
+Implementation status is tracked in:
+- **Spec files** (`docs/specs/`) via `[x]`/`[ ]`/`[D]` markers on EARS specs
+- **Planning docs** (`docs/planning/`) via checkboxes for multi-session progress
+- **Arrow docs** (`docs/arrows/`) via coverage tables (if using arrow-maintenance skill)
 
 ## File Location
 
@@ -33,7 +38,7 @@ Technical details...
 ## Open Questions & Future Decisions
 
 ### Resolved
-1. Decision made with rationale
+1. ✅ Decision made with rationale
 
 ### Deferred
 1. Decision to make during implementation

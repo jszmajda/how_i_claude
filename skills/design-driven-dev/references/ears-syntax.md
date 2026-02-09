@@ -8,20 +8,33 @@ EARS (Easy Approach to Requirements Syntax) provides structured patterns for wri
 
 ## Spec File Format
 
-Specs should be **concise and scannable**. Each requirement is one line:
+Specs live in `/docs/specs/` files with status markers. Each requirement is one line:
 
 ```markdown
-- **{ID}**: {Requirement statement}
+- [x] **{ID}**: {Requirement statement}
+- [ ] **{ID}**: {Requirement statement}
+- [D] **{ID}**: {Requirement statement}
 ```
 
-Group related requirements under headings. Example:
+### Status Markers
+
+- `[x]` — **Implemented**: Code and tests exist that realize this spec
+- `[ ]` — **Active gap**: Should be implemented, work to do
+- `[D]` — **Deferred**: Correct intent, not needed yet (e.g., scaling optimization not needed at current user count)
+
+### Removing Specs
+
+**Delete specs that are no longer wanted.** Do not mark them — just remove the line. Git preserves history if the rationale needs to be recovered later. A spec's presence means the intent is current; absence means the intent was withdrawn.
+
+### Example
 
 ```markdown
 ## User Authentication
 
-- **AUTH-UI-001**: The system shall display a login button on the home screen.
-- **AUTH-UI-002**: When the user taps the login button, the system shall navigate to the authentication flow.
-- **AUTH-API-001**: The system shall validate JWT tokens on every authenticated API request.
+- [x] **AUTH-UI-001**: The system shall display a login button on the home screen.
+- [x] **AUTH-UI-002**: When the user taps the login button, the system shall navigate to the authentication flow.
+- [ ] **AUTH-API-001**: The system shall validate JWT tokens on every authenticated API request.
+- [D] **AUTH-API-002**: Where multi-factor authentication is enabled, the system shall require a second factor.
 ```
 
 ---
