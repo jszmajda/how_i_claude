@@ -1,6 +1,6 @@
 ---
-name: design-driven-dev
-description: Guide for design-driven development. Consult for ALL code changes. New features use full workflow (HLD → LLD → EARS → Plan). Bug fixes skip doc creation but still verify intent coherence—check that existing specs, tests, and code align before changing anything.
+name: linked-intent-driven-dev
+description: Guide for linked-intent-driven development. Consult for ALL code changes. New features use full workflow (HLD → LLD → EARS → Plan). Bug fixes skip doc creation but still verify intent coherence—check that existing specs, tests, and code align before changing anything.
 ---
 
 # Design-Driven Development
@@ -147,7 +147,15 @@ Before implementing (or resuming implementation), verify coherence:
 - Do the tests trace to current EARS?
 - If drift is detected, fix the docs first—then implement.
 
-## Code Annotation Pattern
+## Phase 5: Implementation
+
+Proceed through each implementation phase, one EARS spec at a time. 
+
+### Test-Driven Development
+
+For each EARS spec, use a test-driven development approach. Write the tests and then stop and get user approval before proceeding. Then write the implementation so that the tests pass. Stop and get user approval before proceeding to the next EARS spec.
+
+### Code Annotation Pattern
 
 Annotate code with `@spec` comments linking to EARS IDs:
 
