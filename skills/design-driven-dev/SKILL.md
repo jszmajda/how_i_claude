@@ -79,6 +79,8 @@ Key principles:
 - Spec files carry status markers: `[x]` implemented, `[ ]` active gap, `[D]` deferred
 - **Delete specs that are no longer wanted** — git preserves history
 
+**Disambiguation check:** Before finalizing specs, review each one for implicit scoping — see [ears-syntax.md § Scope Disambiguation](references/ears-syntax.md). In particular, when adding a new mode or variant to existing behavior, audit sibling specs for scope that was implicit when only one variant existed.
+
 **Stop and get user approval before proceeding.**
 
 ## Phase 4: Implementation Plan

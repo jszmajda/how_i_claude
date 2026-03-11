@@ -95,6 +95,44 @@ Keep IDs stable - don't renumber when inserting requirements.
 
 ---
 
+## Scope Disambiguation
+
+A spec should be interpretable correctly even if found via grep without its surrounding section or file context. The dangerous anti-pattern is a spec that **reads as a universal rule but is actually scoped to a specific mode, variant, or context** — it becomes an implementation trap when a second variant is added.
+
+### Checklist
+
+1. **Name the scope in the WHEN clause.** If a spec applies to a specific mode, pass, or context, state it explicitly — don't rely on the section header.
+2. **Litmus test:** "If a second variant of this behavior existed, would this spec still be unambiguous?" If no, the scope is implicit and needs to be stated.
+3. **Cross-file domain concepts:** When a spec references a concept defined in another spec file, include a brief parenthetical — not a full definition, but enough to prevent a plausible-but-wrong implementation.
+
+### Watch ubiquitous specs
+
+Ubiquitous specs ("The system shall...") are most vulnerable — they have no WHEN clause to carry scope. Ask: is this truly ubiquitous, or does it just feel that way because there's currently only one context?
+
+### Examples
+
+**Bad** — sounds universal, actually scoped to one notification channel:
+```
+- **NOTIF-BE-003**: Notifications shall use a 30-second delivery timeout.
+```
+
+**Good** — scope is explicit:
+```
+- **NOTIF-BE-003**: Both email and push notifications shall use a 30-second delivery timeout.
+```
+
+**Bad** — cross-file concept with no inline context:
+```
+- **CART-API-012**: When processing retry queue items, the system shall implement a 500ms delay between requests.
+```
+
+**Good** — parenthetical prevents wrong interpretation:
+```
+- **CART-API-012**: When processing retry queue items (failed payment attempts re-queued after gateway timeout), the system shall implement a 500ms delay between payment gateway requests.
+```
+
+---
+
 ## Code Annotations
 
 Reference specs in implementation:
