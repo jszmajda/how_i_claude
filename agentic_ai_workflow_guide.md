@@ -240,7 +240,7 @@ description: Guide test-driven development workflow. Use when writing new featur
 - Practices you want enforced consistently (TDD, code review checklists)
 - Complex multi-step processes where order matters
 
-**Honest observation:** In practice, Claude doesn't always invoke skills even when they seem relevant. A `/design-driven-dev` skill might exist but Claude won't use it unless the request clearly matches the description—or you invoke it manually with `/skill-name`. If a skill isn't triggering when you expect, check that:
+**Honest observation:** In practice, Claude doesn't always invoke skills even when they seem relevant. A `/linked-intent-dev` skill might exist but Claude won't use it unless the request clearly matches the description—or you invoke it manually with `/skill-name`. If a skill isn't triggering when you expect, check that:
 - The description includes words users naturally say
 - The trigger conditions are specific, not vague
 - You might need to mention keywords from the description

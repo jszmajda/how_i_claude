@@ -14,7 +14,7 @@ Based on analysis of 1,352 real development messages to identify what communicat
 
 The `skills/` folder contains reusable skill definitions for Claude Code:
 
-- **[design-driven-dev](skills/design-driven-dev/SKILL.md)** - Structured workflow for design-before-code: HLD → LLD → EARS specs → Implementation plan
+- **[linked-intent-dev](skills/linked-intent-dev/SKILL.md)** - Linked-intent development (LID) — structured workflow for design-before-code: HLD → LLD → EARS specs → Implementation plan
 
 ## Key Insights
 

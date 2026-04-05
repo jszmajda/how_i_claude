@@ -1,11 +1,11 @@
 ---
-name: design-driven-dev
-description: Guide for design-driven development. Consult for ALL code changes. New features use full workflow (HLD → LLD → EARS → Plan). Bug fixes skip doc creation but still verify intent coherence—check that existing specs, tests, and code align before changing anything.
+name: linked-intent-dev
+description: Guide for linked-intent development (LID). Consult for ALL code changes. New features use full workflow (HLD → LLD → EARS → Plan). Bug fixes skip doc creation but still verify intent coherence—check that existing specs, tests, and code align before changing anything.
 ---
 
-# Design-Driven Development
+# Linked-Intent Development
 
-This skill guides a structured design-driven development workflow. The goal is to get alignment on what you're building *before* writing code, which dramatically reduces rework and misunderstandings.
+This skill guides a structured linked-intent development workflow. The goal is to get alignment on what you're building *before* writing code, which dramatically reduces rework and misunderstandings.
 
 ## Critical Rule: Stop and Iterate
 
