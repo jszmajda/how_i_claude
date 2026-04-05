@@ -35,6 +35,14 @@ Technical details...
 
 Technical details...
 
+## Decisions & Alternatives
+
+For each significant design choice, record what was chosen, what was considered, and why. This section preserves context for future sessions — if requirements change, the team can revisit a specific decision rather than re-exploring the entire design space.
+
+| Decision | Chosen | Alternatives Considered | Rationale |
+|----------|--------|------------------------|-----------|
+| (decision point) | (selected approach) | (brief list) | (why this direction) |
+
 ## Open Questions & Future Decisions
 
 ### Resolved
