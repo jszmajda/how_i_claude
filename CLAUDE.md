@@ -10,14 +10,14 @@ Shareable tools, skills, and guides for working with agentic AI coding systems. 
 
 - **Root markdown files**: Guides and reference material (workflow guide, communication guide, quick reference, meta blog post, data index)
 - **`skills/`**: Reusable skill definitions for agentic coding systems
-  - **`design-driven-dev/`**: Structured HLD → LLD → EARS → Implementation Plan workflow with intent coherence tracking
-  - **`arrow-maintenance/`**: Scaling layer for design-driven-dev — tracks spec-to-code coherence across large projects via `docs/arrows/` index
+  - **`linked-intent-dev/`**: Linked-intent development (LID) — structured HLD → LLD → EARS → Implementation Plan workflow with intent coherence tracking
+  - **`arrow-maintenance/`**: Scaling layer for linked-intent-dev — tracks spec-to-code coherence across large projects via `docs/arrows/` index
 
 ## Skills Architecture
 
 The two skills form a layered system:
 
-1. **design-driven-dev** is the core workflow — consult for ALL code changes in projects that use it. New features get full 4-phase design (HLD → LLD → EARS specs → Plan). Bug fixes skip doc creation but still verify intent coherence.
+1. **linked-intent-dev** is the core workflow — consult for ALL code changes in projects that use it. New features get full 4-phase design (HLD → LLD → EARS specs → Plan). Bug fixes skip doc creation but still verify intent coherence.
 
 2. **arrow-maintenance** overlays on top — adds navigation (`index.yaml`) and tracking (arrow docs) for projects too large to hold in one context window. Arrows map the `HLD → LLDs → EARS → Tests → Code` chain per domain/subsystem.
 

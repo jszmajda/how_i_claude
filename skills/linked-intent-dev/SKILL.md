@@ -1,11 +1,11 @@
 ---
-name: design-driven-dev
-description: Guide for design-driven development. Consult for ALL code changes. New features use full workflow (HLD → LLD → EARS → Plan). Bug fixes skip doc creation but still verify intent coherence—check that existing specs, tests, and code align before changing anything.
+name: linked-intent-dev
+description: Guide for linked-intent development (LID). Consult for ALL code changes. New features use full workflow (HLD → LLD → EARS → Plan). Bug fixes skip doc creation but still verify intent coherence—check that existing specs, tests, and code align before changing anything.
 ---
 
-# Design-Driven Development
+# Linked-Intent Development
 
-This skill guides a structured design-driven development workflow. The goal is to get alignment on what you're building *before* writing code, which dramatically reduces rework and misunderstandings.
+This skill guides a structured linked-intent development workflow. The goal is to get alignment on what you're building *before* writing code, which dramatically reduces rework and misunderstandings.
 
 ## Critical Rule: Stop and Iterate
 
@@ -42,11 +42,22 @@ Even when skipping doc creation, verify intent coherence: do existing specs, tes
 
 Check if a project HLD exists first: `/docs/high-level-design.md`
 
-For new projects or major features, create an HLD covering:
+### Step 1a: Trade-off Sketches
+
+Before drafting the full HLD, identify the 2–3 most consequential architectural trade-offs for this feature. For each one:
+- Name the decision point
+- Sketch the competing approaches (~200 words max each)
+- Note downstream consequences of each approach (what becomes easier, what becomes harder)
+
+**Present the trade-off sketches to the user.** The user selects, combines, or redirects. This ensures the checkpoint is a *choice among alternatives*, not a reaction to a single draft.
+
+### Step 1b: Full HLD Draft
+
+Incorporating the user's trade-off selections, draft the HLD covering:
 - Problem statement and goals
 - Target users and personas
 - System architecture overview
-- Key design decisions and trade-offs
+- Key design decisions and trade-offs (with selections from Step 1a)
 - Non-goals (what's explicitly out of scope)
 
 **Stop and get user approval before proceeding.**
@@ -63,6 +74,13 @@ Key principles:
 - Include data models, error handling, edge cases
 - Reference the HLD for context
 - **LLDs are pure design documents** — they describe *how* things work but do not track implementation status
+- Include a **Decisions & Alternatives** section — see [lld-templates.md](references/lld-templates.md)
+
+### Edge Case Probe
+
+After drafting each LLD, review it and generate a list of "what happens when..." questions — missing edge cases, unspecified failure modes, implicit assumptions about ordering, concurrency, empty states, or error propagation that the LLD doesn't address. Use a subagent for this review if available.
+
+**Present the gap list alongside the LLD draft.** The user decides which gaps to address in the LLD and which are out of scope. Update the LLD before proceeding. This is a *coverage probe*, not an alternative design — the HLD trade-offs were already resolved in Phase 1.
 
 **Stop and get user approval before proceeding.**
 
@@ -79,7 +97,15 @@ Key principles:
 - Spec files carry status markers: `[x]` implemented, `[ ]` active gap, `[D]` deferred
 - **Delete specs that are no longer wanted** — git preserves history
 
-**Disambiguation check:** Before finalizing specs, review each one for implicit scoping — see [ears-syntax.md § Scope Disambiguation](references/ears-syntax.md). In particular, when adding a new mode or variant to existing behavior, audit sibling specs for scope that was implicit when only one variant existed.
+### Consistency Verification
+
+After generating specs, cross-check before presenting to the user:
+
+- **Coverage**: Are there behaviors described in the LLD that have no corresponding EARS spec?
+- **Contradiction**: Do any specs say different things about the same behavior?
+- **Implicit scoping**: Review each spec for scope that is implicit rather than stated — see [ears-syntax.md § Scope Disambiguation](references/ears-syntax.md). When adding a new mode or variant, audit sibling specs for scope that was implicit when only one variant existed.
+
+**Present a brief consistency report alongside the specs.** Flag gaps, contradictions, and scoping issues explicitly. The user resolves any issues before approval.
 
 **Stop and get user approval before proceeding.**
 
@@ -188,3 +214,5 @@ During implementation:
 | **Survives session breaks** | Docs persist, context doesn't get lost |
 | **Reusable** | Same docs work across multiple sessions |
 | **Testable requirements** | EARS format ensures requirements are verifiable |
+
+Work back and forth with the user, starting with your open questions and outline before writing any plan.

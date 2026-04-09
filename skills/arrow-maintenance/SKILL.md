@@ -1,11 +1,11 @@
 ---
 name: arrow-maintenance
-description: Manage the arrow of intent tracking system for complex projects. Use when working with docs/arrows/ directory, auditing spec-to-code coherence, mapping new system areas, or maintaining the arrow dependency graph. Compatible overlay on top of design-driven-dev — adds navigation and tracking for projects too large to hold in one context window.
+description: Manage the arrow of intent tracking system for complex projects. Use when working with docs/arrows/ directory, auditing spec-to-code coherence, mapping new system areas, or maintaining the arrow dependency graph. Compatible overlay on top of linked-intent-dev — adds navigation and tracking for projects too large to hold in one context window.
 ---
 
 # Arrow Maintenance
 
-The arrow system tracks design-to-code coherence across a complex project. It's a scaling layer on top of the design-driven-dev workflow — when a project has too many LLDs and spec files to navigate from memory, arrows provide the map.
+The arrow system tracks design-to-code coherence across a complex project. It's a scaling layer on top of the linked-intent-dev workflow — when a project has too many LLDs and spec files to navigate from memory, arrows provide the map.
 
 ## Core Concepts
 
